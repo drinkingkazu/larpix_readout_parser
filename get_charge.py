@@ -18,7 +18,6 @@ def get_run_config_charge(run_config_path):
     run_config['V_PEDESTAL'] = run_yaml['V_PEDESTAL']  # mV
     run_config['ADC_COUNTS'] = run_yaml['ADC_COUNTS'] 
 
-
     return run_config
 
 def get_charge_ADC(packets_arr):
@@ -36,4 +35,8 @@ def get_charge_ke(packets_arr, run_config_path):
     packet_ke = packet_mV / run_config['GAIN']
     print("packet_ke ", packet_ke)
     return packet_ke
-    
+
+def get_charge_MeV(packets_arr, run_config_path):
+    ## work function, lifetime, recombination
+    packet_MeV = get_charge_ke(packets_arr, run_config_path)
+    return paciket_MeV    
