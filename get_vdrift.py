@@ -57,7 +57,6 @@ def v_drift(run_config, mode=1):
         # for intermediate eField, vdrift model uses ICARUS parametrization
         elif e_field < 0.619:
             v_drift = drift_speed_helper(ICARUS_params, e_field, temp)
-            print(v_drift)
     
         # for eField between two model ranges
         elif e_field < 0.699:
