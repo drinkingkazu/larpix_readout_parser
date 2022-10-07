@@ -4,6 +4,7 @@
 # MeV (include work function, recombination and lifetime correction)
 import numpy as np
 import units
+import charge_calibration as Cali
 
 def get_charge_ADC(packets_arr):
     return packets_arr['dataword']
@@ -18,7 +19,10 @@ def get_charge_ke(packets_arr, run_config):
     packet_ke = packet_mV / run_config['GAIN']
     return packet_ke
 
-def get_charge_MeV(packets_arr, run_config):
-    ## work function, lifetime, recombination
-    packet_MeV = get_charge_ke(packets_arr, run_config) * 1000 / 0.7 * 23.6 * units.eV / units.MeV
+def get_charge_MeV(packets_arr, t_drift_arr, run_config):
+    ## recombination require truth matching
+    # W_ion [MeV/e]
+    lifetime_red = Cali.lifetime(t_drift_arr, run_config) 
+    recomb = Cali.recombination(2, run_config)
+    packet_MeV = get_charge_ke(packets_arr, run_config) * 1000 / recomb / lifetime_red * run_config['W_ion']
     return packet_MeV    

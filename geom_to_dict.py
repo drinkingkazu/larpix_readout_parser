@@ -51,13 +51,15 @@ def multi_layout_to_dict(geom_repo, geom_name):
                 pixel_pitch + pixel_pitch / 2 - y_size / 2
 
             x, y = rotate_pixel((x, y), tile_orientation)
+            # from multi_tile_layout-2.3.16 onwards, use tile_indeces[tile][0]
+            # for multi_tile_layout-2.2.16 and prior versions, use tile_indeces[tile][1]
             x += tile_positions[tile][2] + \
-                tpc_centers[tile_indeces[tile][1]][0]
+                tpc_centers[tile_indeces[tile][0]][0]
             y += tile_positions[tile][1] + \
-                tpc_centers[tile_indeces[tile][1]][1]
+                tpc_centers[tile_indeces[tile][0]][1]
 
             z = tile_positions[tile][0] + \
-                tpc_centers[tile_indeces[tile][1]][2]
+                tpc_centers[tile_indeces[tile][0]][2]
             direction = tile_orientations[tile][0]
 
             geometry[(io_group, io_channel, chip, channel)] = np.array([x, y, z, direction])
