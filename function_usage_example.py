@@ -1,10 +1,20 @@
 import h5py 
 import numpy as np
 
-import event_parser as EvtParser
-import hit_parser as HitParser
-import geom_dict_loader as DictLoader
-import util
+from LarpixParser import event_parser as EvtParser
+from LarpixParser import hit_parser as HitParser
+from LarpixParser import geom_dict_loader as DictLoader
+from LarpixParser import util as util
+
+#import larpix_readout_parser.event_parser as EvtParser
+#import larpix_readout_parser.hit_parser as HitParser
+#import larpix_readout_parser.geom_dict_loader as DictLoader
+#import larpix_readout_parser.util as util
+
+#import event_parser as EvtParser
+#import hit_parser as HitParser
+#import geom_dict_loader as DictLoader
+#import util
 
 f = h5py.File('example_data/larnd-sim_output_mpr_mu100.h5', 'r')
 tracks = f['tracks']
