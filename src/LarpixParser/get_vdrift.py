@@ -1,7 +1,8 @@
 import yaml
 import numpy as np
-import units
 import math
+
+from LarpixParser import units
 
 # move everything to a separate repo
 # add global variable

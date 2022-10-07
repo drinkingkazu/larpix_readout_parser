@@ -1,7 +1,8 @@
 import numpy as np
-import get_vdrift as GetV
-import event_parser as EvtParser
-import util
+
+from LarpixParser import get_vdrift as GetV
+from LarpixParser import event_parser as EvtParser
+from LarpixParser import util
 
 def get_pixel_plane_position(packets_arr, geom_dict):
     

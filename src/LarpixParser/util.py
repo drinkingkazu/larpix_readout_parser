@@ -1,5 +1,5 @@
 import yaml
-import units
+from LarpixParser import units
 
 def get_data_packets(packets):
 

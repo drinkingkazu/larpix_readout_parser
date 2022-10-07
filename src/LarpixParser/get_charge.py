@@ -3,8 +3,9 @@
 # ke-
 # MeV (include work function, recombination and lifetime correction)
 import numpy as np
-import units
-import charge_calibration as Cali
+
+from LarpixParser import units
+from LarpixParser import charge_calibration as Cali
 
 def get_charge_ADC(packets_arr):
     return packets_arr['dataword']

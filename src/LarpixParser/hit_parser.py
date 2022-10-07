@@ -1,7 +1,7 @@
-import get_raw_coord as GetCoord
-import coord_transform as CoordTran
-import get_charge as GetCharge
-import util
+from LarpixParser import get_raw_coord as GetCoord
+from LarpixParser import coord_transform as CoordTran
+from LarpixParser import get_charge as GetCharge
+from LarpixParser import util
 
 def hit_parser(t0, packets, geom_dict, run_config):
     packets_arr = util.get_data_packets(packets)
