@@ -6,13 +6,13 @@ VER = "0.0.1"
 
 setuptools.setup(
     name="LarpixParser",
-    #packages=["LarpixParser"],
     version=VER,
     author="Yifan C. and others",
     author_email="cyifan@slac",
     description="A package parsing the larpix output to hit-level",
     url="https://github.com/YifanC/larpix_readout_parser",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(where="src"), #"where" is needed; "include=['LarpixParser']" is not necessary 
+    package_dir={"":"src"},
     install_requires=["numpy", "h5py", "fire"],
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",

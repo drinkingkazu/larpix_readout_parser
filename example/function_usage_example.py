@@ -25,5 +25,14 @@ for evt_id in event_ids:
     pckt_mask = pckt_event_ids == evt_id
     packets_ev = packets[pckt_mask]
     t0 = t0_grp[evt_id][0]
-    x,y,z,dE = HitParser.hit_parser(t0, packets_ev, geom_dict, run_config)
+    
+    ## x is the drift; y is the vertical direction; z is horizontal axis in pixel plane
+
+    # if you want position and energy (derived from the readout)
+    x,y,z,dE = HitParser.hit_parser_energy(t0, packets_ev, geom_dict, run_config)
+    # if you want position and charge [ke-]
+    x,y,z,dQ = HitParser.hit_parser_charge(t0, packets_ev, geom_dict, run_config)
+    # if you just want the position info
+    x,y,z,t_drift = HitParser.hit_parser_position(t0, packets_ev, geom_dict, run_config)
+
 
