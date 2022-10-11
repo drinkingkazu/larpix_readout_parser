@@ -1,6 +1,6 @@
 # LarpixParser
 This package provides simple function to parse LArPix readout position [mm], read out charge [thousand electrons(ke-)] and deposited energy [MeV].\
-This package is also available on pypi: https://pypi.org/project/LarpixParser/. \
+This package is also available on pypi: https://pypi.org/project/LarpixParser/. 
 >```pip install LarpixParser```
 
 ## What do you need to prepare?
