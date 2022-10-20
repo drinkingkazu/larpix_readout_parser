@@ -9,17 +9,22 @@ from collections import defaultdict
 def rotate_pixel(pixel_pos, tile_orientation):
     return pixel_pos[0]*tile_orientation[2], pixel_pos[1]*tile_orientation[1]
 
-def multi_layout_to_dict(geom_repo, geom_name):
+def multi_layout_to_dict(geom_repo, geom_name, det_name):
 
     yaml_path = os.path.join(geom_repo, geom_name + ".yaml")
     with open(yaml_path) as infile:
         geometry_yaml = yaml.load(infile, Loader=yaml.FullLoader)
 
+    det_yaml_path = os.path.join(geom_repo,
+                                 det_name + ".yaml")
+    with open(det_yaml_path) as infile:
+        det_yaml = yaml.load(infile, Loader=yaml.FullLoader)
+        
     pixel_pitch = geometry_yaml['pixel_pitch']
     chip_channel_to_position = geometry_yaml['chip_channel_to_position']
     tile_orientations = geometry_yaml['tile_orientations']
     tile_positions = geometry_yaml['tile_positions']
-    tpc_centers = geometry_yaml['tpc_centers']
+    tpc_centers = det_yaml['tpc_offsets']
     tile_indeces = geometry_yaml['tile_indeces']
     xs = np.array(list(chip_channel_to_position.values()))[:, 0] * pixel_pitch
     ys = np.array(list(chip_channel_to_position.values()))[:, 1] * pixel_pitch
@@ -49,17 +54,20 @@ def multi_layout_to_dict(geom_repo, geom_name):
                 pixel_pitch + pixel_pitch / 2 - x_size / 2
             y = chip_channel_to_position[chip_channel][1] * \
                 pixel_pitch + pixel_pitch / 2 - y_size / 2
-
+            
             x, y = rotate_pixel((x, y), tile_orientation)
             # from multi_tile_layout-2.3.16 onwards, use tile_indeces[tile][0]
             # for multi_tile_layout-2.2.16 and prior versions, use tile_indeces[tile][1]
-            x += tile_positions[tile][2] + \
-                tpc_centers[tile_indeces[tile][0]][0]
-            y += tile_positions[tile][1] + \
-                tpc_centers[tile_indeces[tile][0]][1]
 
-            z = tile_positions[tile][0] + \
-                tpc_centers[tile_indeces[tile][0]][2]
+            module_id = (io_group-1)//4
+            x_offset = tpc_centers[module_id][0]*10
+            y_offset = tpc_centers[module_id][1]*10
+            z_offset = tpc_centers[module_id][2]*10
+            
+            x += tile_positions[tile][2] + x_offset
+            y += tile_positions[tile][1] + y_offset
+
+            z = tile_positions[tile][0] + z_offset
             direction = tile_orientations[tile][0]
 
             geometry[(io_group, io_channel, chip, channel)] = np.array([x, y, z, direction])
