@@ -25,7 +25,7 @@ def multi_layout_to_dict(geom_repo, geom_name, det_name):
     tile_orientations = geometry_yaml['tile_orientations']
     tile_positions = geometry_yaml['tile_positions']
     tpc_centers = det_yaml['tpc_offsets']
-    tile_indices = geometry_yaml['tile_indices']
+    tile_indeces = geometry_yaml['tile_indeces']
     xs = np.array(list(chip_channel_to_position.values()))[:, 0] * pixel_pitch
     ys = np.array(list(chip_channel_to_position.values()))[:, 1] * pixel_pitch
     x_size = max(xs) - min(xs) + pixel_pitch
@@ -56,8 +56,8 @@ def multi_layout_to_dict(geom_repo, geom_name, det_name):
                 pixel_pitch + pixel_pitch / 2 - y_size / 2
             
             x, y = rotate_pixel((x, y), tile_orientation)
-            # from multi_tile_layout-2.3.16 onwards, use tile_indices[tile][0]
-            # for multi_tile_layout-2.2.16 and prior versions, use tile_indices[tile][1]
+            # from multi_tile_layout-2.3.16 onwards, use tile_indeces[tile][0]
+            # for multi_tile_layout-2.2.16 and prior versions, use tile_indeces[tile][1]
 
             module_id = (io_group-1)//4
             x_offset = tpc_centers[module_id][0]*10
