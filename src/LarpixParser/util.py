@@ -15,6 +15,7 @@ def get_run_config(run_config_path):
     with open(run_config_path) as infile:
         run_yaml = yaml.load(infile, Loader=yaml.FullLoader)
 
+    run_config['tpc_offsets'] = run_yaml['tpc_offsets'] * units.cm
     run_config['y_offset'] = run_yaml['tpc_offsets'][0][1] * units.cm
 
     run_config['GAIN'] = run_yaml['GAIN']  # mV/ke-

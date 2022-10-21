@@ -9,8 +9,7 @@ from collections import defaultdict
 def rotate_pixel(pixel_pos, tile_orientation):
     return pixel_pos[0]*tile_orientation[2], pixel_pos[1]*tile_orientation[1]
 
-def multi_layout_to_dict(geom_repo, geom_name,
-                         det_name, offset_y = True):
+def multi_layout_to_dict(geom_repo, geom_name, det_name):
 
     yaml_path = os.path.join(geom_repo, geom_name + ".yaml")
     with open(yaml_path) as infile:
@@ -60,19 +59,9 @@ def multi_layout_to_dict(geom_repo, geom_name,
             # from multi_tile_layout-2.3.16 onwards, use tile_indeces[tile][0]
             # for multi_tile_layout-2.2.16 and prior versions, use tile_indeces[tile][1]
 
-            module_id = (io_group-1)//4
-            x_offset = tpc_centers[module_id][0]*10
-            z_offset = tpc_centers[module_id][2]*10
-            
-            if offset_y:
-                y_offset = tpc_centers[module_id][1]*10
-            else:
-                y_offset = 0
-
-            x += tile_positions[tile][2] + x_offset
-            y += tile_positions[tile][1] + y_offset
-
-            z = tile_positions[tile][0] + z_offset
+            x += tile_positions[tile][2]
+            y += tile_positions[tile][1]
+            z = tile_positions[tile][0]
             direction = tile_orientations[tile][0]
 
             geometry[(io_group, io_channel, chip, channel)] = np.array([x, y, z, direction])
