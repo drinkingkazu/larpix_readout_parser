@@ -8,7 +8,9 @@ def get_pixel_plane_position(packets_arr, geom_dict):
     
     x, y, z, direction = [], [], [], []
     for packet in packets_arr:
-        xyz = geom_dict[packet['io_group'], packet['io_channel'], packet['chip_id'], packet['channel_id']]
+        io_group = packet['io_group']
+        io_group = io_group - (io_group-1)//4*4        
+        xyz = geom_dict[io_group, packet['io_channel'], packet['chip_id'], packet['channel_id']]
         x.append(xyz[0])
         y.append(xyz[1])
         z.append(xyz[2])
