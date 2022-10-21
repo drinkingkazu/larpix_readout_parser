@@ -15,9 +15,9 @@ def get_pixel_plane_position(packets_arr, geom_dict, run_config):
         io_group = io_group - module_id*4
         
         xyz = geom_dict[io_group, packet['io_channel'], packet['chip_id'], packet['channel_id']]
-        x_offset = tpc_centers[module_id][0]*10
-        z_offset = tpc_centers[module_id][2]*10
+        x_offset = tpc_centers[module_id][2]*10
         y_offset = tpc_centers[module_id][1]*10
+        z_offset = tpc_centers[module_id][0]*10
         
         x.append(xyz[0] + x_offset)
         y.append(xyz[1] + y_offset)
