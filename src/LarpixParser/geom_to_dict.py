@@ -9,7 +9,7 @@ from collections import defaultdict
 def rotate_pixel(pixel_pos, tile_orientation):
     return pixel_pos[0]*tile_orientation[2], pixel_pos[1]*tile_orientation[1]
 
-def multi_layout_to_dict(geom_repo, geom_name, det_name):
+def multi_layout_to_dict(geom_repo, geom_name, det_name, save_pickle = True):
 
     yaml_path = os.path.join(geom_repo, geom_name + ".yaml")
     with open(yaml_path) as infile:
@@ -66,14 +66,18 @@ def multi_layout_to_dict(geom_repo, geom_name, det_name):
 
             geometry[(io_group, io_channel, chip, channel)] = np.array([x, y, z, direction])
 
-    # need to figure out what to do in case one doesn't have writting rights
-    dict_path = os.path.join(geom_repo, "dict_repo")
-    if not os.path.exists(dict_path):
-        os.makedirs(dict_path)
-    geom_dict_pkl_name = os.path.join(dict_path, geom_name + ".pkl")
+    if save_pickle:
+        # need to figure out what to do in case one doesn't have writting rights
+        dict_path = os.path.join(geom_repo, "dict_repo")
+        if not os.path.exists(dict_path):
+            os.makedirs(dict_path)
+        geom_dict_pkl_name = os.path.join(dict_path, geom_name + ".pkl")
 
-    with open(geom_dict_pkl_name, 'wb') as outfile:
-        pickle.dump(dict(geometry), outfile, protocol=pickle.HIGHEST_PROTOCOL)
+        with open(geom_dict_pkl_name, 'wb') as outfile:
+            pickle.dump(dict(geometry), outfile, protocol=pickle.HIGHEST_PROTOCOL)
+
+    else:
+        return dict(geometry)
 
 if __name__ == "__main__":
     fire.Fire(multi_layout_to_dict)
