@@ -11,7 +11,6 @@ def get_pixel_plane_position(packets_arr, geom_dict, run_config):
     for packet in packets_arr:
         io_group = packet['io_group']
         module_id = (io_group - 1)//4
-        print("iogrp", io_group, "mid", module_id)
         io_group = io_group - module_id*4
         
         xyz = geom_dict[io_group, packet['io_channel'], packet['chip_id'], packet['channel_id']]
