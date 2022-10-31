@@ -4,14 +4,23 @@ from LarpixParser import get_vdrift as GetV
 from LarpixParser import event_parser as EvtParser
 from LarpixParser import util
 
-def get_pixel_plane_position(packets_arr, geom_dict):
+def get_pixel_plane_position(packets_arr, geom_dict, run_config):
+    tpc_centers = run_config['tpc_offsets']
     
     x, y, z, direction = [], [], [], []
     for packet in packets_arr:
-        xyz = geom_dict[packet['io_group'], packet['io_channel'], packet['chip_id'], packet['channel_id']]
-        x.append(xyz[0])
-        y.append(xyz[1])
-        z.append(xyz[2])
+        io_group = packet['io_group']
+        module_id = (io_group - 1)//4
+        io_group = io_group - module_id*4
+        
+        xyz = geom_dict[io_group, packet['io_channel'], packet['chip_id'], packet['channel_id']]
+        x_offset = tpc_centers[module_id][2]*10
+        y_offset = tpc_centers[module_id][1]*10
+        z_offset = tpc_centers[module_id][0]*10
+        
+        x.append(xyz[0] + x_offset)
+        y.append(xyz[1] + y_offset)
+        z.append(xyz[2] + z_offset)
         direction.append(xyz[3])
  
     return x, y, z, direction
@@ -39,7 +48,7 @@ def get_t_drift(t0, packets_arr, run_config):
 
 def get_hit3D_position_tdrift(t0,  packets, packets_arr, geom_dict, run_config):
 
-    x, y, z_anode, direction = get_pixel_plane_position(packets_arr, geom_dict)
+    x, y, z_anode, direction = get_pixel_plane_position(packets_arr, geom_dict, run_config)
 
     v_drift = GetV.v_drift(run_config, 1)
 
