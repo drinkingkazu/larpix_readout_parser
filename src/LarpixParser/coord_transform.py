@@ -1,6 +1,3 @@
-# shift y
-# switch xz
-
 def switch_xz(x, y, z):
     return z, y, x
 
