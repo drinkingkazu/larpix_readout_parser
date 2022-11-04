@@ -4,23 +4,6 @@ import math
 
 from LarpixParser import units
 
-# move everything to a separate repo
-# add global variable
-
-def get_run_config_vdrift(run_config_path):
-    '''
-    '''
-    run_config = {}
-
-    with open(run_config_path) as infile:
-        run_yaml = yaml.load(infile, Loader=yaml.FullLoader)
-
-    # Note efield is expected to be in kV/mm to match with the unit treatment
-    run_config['efield'] = run_yaml['e_field'] / (units.kV / units.cm) # kV/cm
-    run_config['temp'] = run_yaml['temperature'] / (units.K) #K
-
-    return run_config
-
 
 def v_drift(run_config, mode=1):
     ''' 
