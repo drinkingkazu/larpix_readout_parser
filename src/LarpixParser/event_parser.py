@@ -1,10 +1,8 @@
-# external trigger
-# self trigger
 import numpy as np
 
 def get_t0(packets):
 
-    pckts_t0 = packets[packets['packet_type'] == 7]
+    pckts_t0 = packets[packets['packet_type'] == 7] # external trigger # by default larnd-sim fills external trigger for each event
     n_grps = len(np.unique(pckts_t0['io_group']))
 
     return pckts_t0['timestamp'].reshape(-1, n_grps)
@@ -29,9 +27,9 @@ def packet_to_eventid(assn, tracks):
         `len(event_ids)` equals to `len(packets)`
     '''
     track_ids = assn['track_ids'].max(axis=-1)
-    
+   
     event_ids = np.full_like(track_ids, -1, dtype=int)
     mask = track_ids != -1
     event_ids[mask] = tracks['eventID'][track_ids[mask]]
-    
+
     return event_ids

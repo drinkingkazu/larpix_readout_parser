@@ -49,7 +49,7 @@ def larpix_layout_to_dict(geom_repo, larpix_layout_name, save_dict=True, dict_ou
             except KeyError:
                 continue
 
-            io_group_per_module = io_group_io_channel // 1000
+            io_group = io_group_io_channel // 1000 # io_group per module (not the real io_group)
             io_channel = io_group_io_channel % 1000
             x = chip_channel_to_position[chip_channel][0] * \
                 pixel_pitch + pixel_pitch / 2 - x_size / 2
@@ -71,7 +71,7 @@ def larpix_layout_to_dict(geom_repo, larpix_layout_name, save_dict=True, dict_ou
             dict_path = os.path.join(geom_repo, "dict_repo")
             if not os.path.exists(dict_path):
                 os.makedirs(dict_path)
-            geom_dict_pkl_name = os.path.join(dict_path, geom_name + ".pkl")
+            geom_dict_pkl_name = os.path.join(dict_path, larpix_layout_name + ".pkl")
         else:
             geom_dict_pkl_name = dict_out
 

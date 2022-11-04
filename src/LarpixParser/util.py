@@ -15,8 +15,8 @@ def get_run_config(run_config_path):
     with open(run_config_path) as infile:
         run_yaml = yaml.load(infile, Loader=yaml.FullLoader)
 
-    run_config['tpc_offsets'] = run_yaml['tpc_offsets'] * units.cm
-    run_config['y_offset'] = run_yaml['tpc_offsets'][0][1] * units.cm
+    run_config['tpc_offsets'] = run_yaml['tpc_offsets'] * units.cm # mm
+    run_config['nr_iogroup_module'] = len(run_yaml['module_to_io_groups'][1]) # 2x2 module: 2 io_groups; nd-lar module: 4 io_groups
 
     run_config['GAIN'] = run_yaml['GAIN']  # mV/ke-
     run_config['V_CM'] = run_yaml['V_CM']  # mV
