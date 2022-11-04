@@ -6,21 +6,29 @@ from LarpixParser import hit_parser as HitParser
 from LarpixParser import geom_dict_loader as DictLoader
 from LarpixParser import util as util
 
+'''
+    If one wants to build the larpix layout dictionary on the fly instead of load from the prebuilt pkl file, uncomment ##**## and comment the geom_dict line
+'''
+
+##**##from LarpixParser import geom_to_dict as DictBuilder
+
 f = h5py.File('../example_data/ndlar_ev20_larndsim.h5', 'r')
 packets = f['packets'] # readout
 tracks = f['tracks'] # Geant4 truth
 assn = f['mc_packets_assn'] # G4-readout association
 
 geom_dict = DictLoader.load_geom_dict("../config_repo/dict_repo/multi_tile_layout-3.0.40.pkl")
-run_config_path = "../config_repo/ndlar-module.yaml"
+##**##geom_repo = '../config_repo'
+##**##larpix_layout_name = 'multi_tile_layout-3.0.40'
+##**##geom_dict = DictBuilder.larpix_layout_to_dict(geom_repo, larpix_layout_name, save_dict=False)
+
+run_config_path = '../config_repo/ndlar-module.yaml'
 run_config = util.get_run_config(run_config_path)
 
-#########
-## The following should be the read-out level information
-## Since this package does not provide event parser, here in the example we use the truth information
-#########
-
-#event_ids = np.unique(tracks['eventID']) # not necessarily all the G4 events have readout info
+'''
+    The following should be the read-out level information
+    Since this package does not provide event parser, here in the example we use the truth information
+'''
 pckt_event_ids = EvtParser.packet_to_eventid(assn, tracks)
 event_ids = np.unique(pckt_event_ids[pckt_event_ids != -1]) 
 t0_grp = EvtParser.get_t0(packets)
