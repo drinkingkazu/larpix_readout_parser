@@ -33,6 +33,8 @@ pckt_event_ids = EvtParser.packet_to_eventid(assn, tracks)
 event_ids = np.unique(pckt_event_ids[pckt_event_ids != -1]) 
 t0_grp = EvtParser.get_t0(packets)
 
+switch_xz = True
+
 for i_ev, evt_id in enumerate(event_ids):
 
     print("--------evt_id: ", evt_id)
@@ -43,10 +45,10 @@ for i_ev, evt_id in enumerate(event_ids):
     ## x is the drift; y is the vertical direction; z is horizontal axis in pixel plane
 
     # if you want position and energy (derived from the readout)
-    x,y,z,dE = HitParser.hit_parser_energy(t0, packets_ev, geom_dict, run_config)
+    x,y,z,dE = HitParser.hit_parser_energy(t0, packets_ev, geom_dict, run_config, switch_xz)
     # if you want position and charge [ke-]
-    x,y,z,dQ = HitParser.hit_parser_charge(t0, packets_ev, geom_dict, run_config)
+    x,y,z,dQ = HitParser.hit_parser_charge(t0, packets_ev, geom_dict, run_config, switch_xz)
     # if you just want the position info
-    x,y,z,t_drift = HitParser.hit_parser_position(t0, packets_ev, geom_dict, run_config)
+    x,y,z,t_drift = HitParser.hit_parser_position(t0, packets_ev, geom_dict, run_config, switch_xz)
 
 
