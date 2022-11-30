@@ -13,6 +13,8 @@ setuptools.setup(
     url="https://github.com/YifanC/larpix_readout_parser",
     packages=setuptools.find_packages(where="src"), #"where" is needed; "include=['LarpixParser']" is not necessary 
     package_dir={"":"src"},
+    package_data={"LarpixParser": ["config_repo/*.yaml",
+                                   "config_repo/dict_repo/*.pkl"]},
     install_requires=["numpy", "h5py", "fire"],
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
