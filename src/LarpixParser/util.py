@@ -1,4 +1,5 @@
 import yaml
+import os
 from LarpixParser import units
 
 def get_data_packets(packets):
@@ -8,10 +9,15 @@ def get_data_packets(packets):
 
     return packets_arr
 
-def get_run_config(run_config_path):
+def get_run_config(run_config_path, use_builtin = False):
 
     run_config = {}
 
+    if use_builtin:
+        run_config_path = os.path.join(os.path.dirname(__file__),
+                                       "config_repo",
+                                       run_config_path)
+    
     with open(run_config_path) as infile:
         run_yaml = yaml.load(infile, Loader=yaml.FullLoader)
 
