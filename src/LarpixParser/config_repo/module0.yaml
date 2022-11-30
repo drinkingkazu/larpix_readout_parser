@@ -9,7 +9,7 @@ V_PEDESTAL: 580 # mV
 #: Number of ADC counts
 ADC_COUNTS: 256
 #: Clock cycle time in :math:`\mu s`
-CLOCK_CYCLE = 0.1
+CLOCK_CYCLE: 0.1
 
 # Argon properties
 temperature: 87.17 # K
