@@ -40,11 +40,11 @@ def get_t_drift(t0, packets_arr, run_config):
     return t_drift
 
 
-def get_hit3D_position_tdrift(t0,  packets, packets_arr, geom_dict, run_config):
+def get_hit3D_position_tdrift(t0,  packets, packets_arr, geom_dict, run_config, **kwargs):
 
     x, y, z_anode, direction = get_pixel_plane_position(packets_arr, geom_dict, run_config)
 
-    v_drift = GetV.v_drift(run_config, 1)
+    v_drift = GetV.v_drift(run_config, **kwargs)
 
     t_drift = get_t_drift(t0, packets_arr, run_config)
 
