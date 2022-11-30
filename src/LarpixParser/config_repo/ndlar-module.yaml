@@ -17,6 +17,8 @@ V_REF: 1300 # mV
 V_PEDESTAL: 580 # mV
 #: Number of ADC counts
 ADC_COUNTS: 256
+#: Clock cycle time in :math:`\mu s`
+CLOCK_CYCLE = 0.1
 
 ## Physical params
 #: Recombination :math:`\alpha` constant for the Box model

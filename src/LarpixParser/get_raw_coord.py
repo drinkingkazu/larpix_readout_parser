@@ -35,7 +35,7 @@ def get_t_drift(t0, packets_arr, run_config):
 
     t = packets_arr['timestamp'].astype(float)
     t_drift = t - t0 # ticks, 0.1us
-    t_drift *= run_config['response_sampling']
+    t_drift *= run_config['CLOCK_CYCLE']
 
     return t_drift
 
