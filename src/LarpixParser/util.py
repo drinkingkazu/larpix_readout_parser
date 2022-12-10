@@ -1,6 +1,15 @@
+from LarpixParser import units
+from LarpixParser import util
+
 import yaml
 import os
-from LarpixParser import units
+import pickle
+import pkg_resources
+
+def load_geom_dict(geom_dict_path):
+    with open(geom_dict_path, "rb") as f_geom_dict:
+        geom_dict = pickle.load(f_geom_dict)
+    return geom_dict
 
 def get_data_packets(packets):
 
@@ -49,3 +58,24 @@ def get_run_config(run_config_path, use_builtin = False):
     run_config['lifetime'] = run_yaml['lifetime'] #us
 
     return run_config
+
+def detector_configuration(detector):
+    if detector == "module0":
+        run_config_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/module0.yaml')
+        geom_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/dict_repo/multi_tile_layout-2.3.16.pkl')
+        run_config = get_run_config(run_config_path)
+        geom_dict = load_geom_dict(geom_path)
+    elif detector == "2x2":
+        run_config_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/2x2.yaml')
+        geom_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/dict_repo/multi_tile_layout-2.3.16.pkl')
+        run_config = get_run_config(run_config_path)
+        geom_dict = load_geom_dict(geom_path)
+    elif detector == "ndlar":
+        run_config_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/ndlar-module.yaml')
+        geom_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/dict_repo/multi_tile_layout-3.0.40.pkl')
+        run_config = get_run_config(run_config_path)
+        geom_dict = load_geom_dict(geom_path)
+    else:
+        raise ValueError("The supported detector choices are: 'module0', '2x2', 'ndlar'.")
+
+    return run_config, geom_dict
