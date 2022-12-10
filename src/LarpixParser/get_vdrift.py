@@ -5,7 +5,7 @@ import math
 from LarpixParser import units
 
 
-def v_drift(run_config, mode=1):
+def v_drift(run_config, drift_model=2):
     ''' 
         Electron drift velocity in mm/us
         
@@ -23,7 +23,7 @@ def v_drift(run_config, mode=1):
     temp = run_config['temp']
 
     # calculate drift velocity
-    if mode == 1:
+    if drift_model == 1:
         # for low eField use mobility, but the parametrization is different than the BNL one
         tdiff = temp - 87.302
         eFit = 0.0938163 - 0.0052563 * tdiff - 0.000146981 * np.power(tdiff,2)
@@ -51,7 +51,7 @@ def v_drift(run_config, mode=1):
         else:
             v_drift = drift_speed_helper(Walkowiak_params, e_field, temp)
 
-    if mode == 2:
+    if drift_model == 2:
         v_drift = electron_mobility(e_field, temp) * (e_field / units.cm) # change e_field's unit to kV/mm
 
     return v_drift

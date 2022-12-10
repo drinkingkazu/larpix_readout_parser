@@ -9,18 +9,23 @@ from collections import defaultdict
 def rotate_pixel(pixel_pos, tile_orientation):
     return pixel_pos[0]*tile_orientation[2], pixel_pos[1]*tile_orientation[1]
 
-def larpix_layout_to_dict(geom_repo, larpix_layout_name, save_dict=True, dict_out=None):
+def larpix_layout_to_dict(larpix_layout_name, geom_repo="builtin",
+                          save_dict=True, dict_out=None):
     '''
         ------------- Note----------------
         The function asssumes each module has the same io configuration, which is currently used in the ndlar/2x2 simulation.
         Therefore, the dictionary is only for single module, and "get_raw_coord" deal with the coordinator of different modules.
         This might be updated in future iteration.
         ----------------------------------
-        geom_repo: the repository contains the larpix layout per module
         larpix_layout_name: the file name of the larpix layout configuration file (per module)
+        geom_repo: the repository contains the larpix layout per module; by default, this function will use the geom repos that ship with the package, installed alongside the libraries
         save_dict: wether to save the dictionary to a pickle file; by default, if one choose not to save it, this funtion will the dictionary
         dict_out: the path to the output pickle file which contains the pixel readout dictionary
     '''
+
+    if geom_repo == "builtin":
+        geom_repo = os.path.join(os.path.dirname(__file__),
+                                 "config_repo")
 
     larpix_geom_path = os.path.join(geom_repo, larpix_layout_name + ".yaml")
     with open(larpix_geom_path) as f_larpix:
