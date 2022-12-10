@@ -31,6 +31,7 @@ def get_run_config(run_config_path, use_builtin = False):
     run_config['ADC_COUNTS'] = run_yaml['ADC_COUNTS']
     run_config['CLOCK_CYCLE'] = run_yaml['CLOCK_CYCLE'] # us
 
+    run_config['drift_model'] = run_yaml['drift_model'] # 1: LArSoft suite 2: BNL mobility model 
     run_config['efield'] = run_yaml['e_field'] / (units.kV / units.cm) # kV/cm # the input from the yaml should be in kV/mm
     run_config['temp'] = run_yaml['temperature'] / (units.K) #K
 

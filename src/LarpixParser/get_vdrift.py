@@ -5,7 +5,7 @@ import math
 from LarpixParser import units
 
 
-def v_drift(run_config, drift_model=1):
+def v_drift(run_config, drift_model=2):
     ''' 
         Electron drift velocity in mm/us
         
