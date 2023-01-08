@@ -1,4 +1,4 @@
-from LarpixParser import geom_dict_loader as DictLoader
+#from LarpixParser import geom_dict_loader as DictLoader
 from LarpixParser import get_raw_coord as GetCoord
 from LarpixParser import coord_transform as CoordTran
 from LarpixParser import get_charge as GetCharge

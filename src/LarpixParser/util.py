@@ -59,23 +59,33 @@ def get_run_config(run_config_path, use_builtin = False):
 
     return run_config
 
+def configuration_keywords():
+    return ['module0','2x2','ndlar']
+
 def detector_configuration(detector):
+
+    if not detector in configuration_keywords():
+        raise ValueError('The keyword %s is not in the list of supported detector names %s' % (detector,str(configuration_keywords())))
+
     if detector == "module0":
         run_config_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/module0.yaml')
         geom_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/dict_repo/multi_tile_layout-2.3.16.pkl')
         run_config = get_run_config(run_config_path)
         geom_dict = load_geom_dict(geom_path)
+
     elif detector == "2x2":
         run_config_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/2x2.yaml')
         geom_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/dict_repo/multi_tile_layout-2.3.16.pkl')
         run_config = get_run_config(run_config_path)
         geom_dict = load_geom_dict(geom_path)
+
     elif detector == "ndlar":
         run_config_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/ndlar-module.yaml')
         geom_path = pkg_resources.resource_filename('LarpixParser', 'config_repo/dict_repo/multi_tile_layout-3.0.40.pkl')
         run_config = get_run_config(run_config_path)
         geom_dict = load_geom_dict(geom_path)
+
     else:
-        raise ValueError("The supported detector choices are: 'module0', '2x2', 'ndlar'.")
+        raise ValueError("The detector '%s' should be supported but no code implementation is found (report to package maintainers)." % detector)
 
     return run_config, geom_dict
